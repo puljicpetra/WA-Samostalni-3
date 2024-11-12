@@ -1,2 +1,2 @@
 # webshop
-Samostalni zadatak za Vježbu 3
+WA3 + Samostalni zadatak za Vježbu 3
