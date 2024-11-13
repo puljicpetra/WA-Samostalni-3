@@ -96,7 +96,10 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 import axios from 'axios';
+
+const route = useRoute();
 
 let proizvod = ref({
   naziv: '',
@@ -109,8 +112,9 @@ let proizvod = ref({
 });
 
 onMounted(async () => {
+  const id = route.params.id; 
   try {
-    const response = await axios.get('http://localhost:3000/proizvodi/1');
+    const response = await axios.get(`http://localhost:3000/proizvodi/${id}`)
     proizvod.value = response.data;
   } catch (error) {
     console.error('Greška u dohvatu podataka:', error);
