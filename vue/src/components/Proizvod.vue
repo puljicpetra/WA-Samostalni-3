@@ -66,11 +66,11 @@
                   :key="index"
                   class="group relative flex cursor-pointer items-center justify-center rounded-md border bg-white px-4 py-3 text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:outline-none"
                   :class="{
-                    'bg-gray-200': odabrano === velicina, 
-                    'border-black': odabrano === velicina,
-                    'font-semibold': odabrano === velicina
+                    'bg-gray-200': odabrana_velicina === velicina, 
+                    'border-black': odabrana_velicina === velicina,
+                    'font-semibold': odabrana_velicina === velicina
                   }"
-                  @click="odabrano = velicina" 
+                  @click="odabrana_velicina = velicina" 
                 >
                   <input type="radio" name="size-choice" :value="velicina" class="sr-only" />
                   <span>{{ velicina }}</span>
@@ -79,7 +79,11 @@
             </fieldset>
           </div>
 
-          <button type="submit" class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-black px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2">
+          <button 
+            type="submit" 
+            class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-black px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
+            @click="dodaj_handler"
+          >
             Dodaj u košaricu
           </button>
         </div>
@@ -106,6 +110,8 @@
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
+import { dodaj } from '../kosarica.js';
+import { useRouter } from 'vue-router';
 
 const route = useRoute();
 
@@ -119,15 +125,39 @@ let proizvod = ref({
   karakteristika: []
 });
 
-const odabrano = ref(null);
+const odabrana_velicina = ref(null);
 
 onMounted(async () => {
   const id = route.params.id; 
   try {
-    const response = await axios.get(`http://localhost:3000/proizvodi/${id}`)
+    const response = await axios.get(`http://localhost:3000/proizvodi/${id}`);
     proizvod.value = response.data;
   } catch (error) {
     console.error('Greška u dohvatu podataka:', error);
   }
 });
+
+const dodaj_handler = () => {
+  if (odabrana_velicina.value) {
+    const proizvod_kosarica = {
+      id: proizvod.value.id,
+      naziv: proizvod.value.naziv,
+      cijena: proizvod.value.cijena,
+      velicina: odabrana_velicina.value,
+      boja: proizvod.value.boje[0],
+      kolicina: 1,
+    };
+    dodaj(proizvod_kosarica);
+    alert("Proizvod je dodan u košaricu!");
+  } else {
+    alert("Molimo odaberite veličinu.");
+  }
+};
+
+const router = useRouter();
+
+const dodaj_proizvod = () => {
+  dodaj(proizvod.value);
+  router.push('/');
+};
 </script>

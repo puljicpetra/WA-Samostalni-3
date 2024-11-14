@@ -4,12 +4,15 @@
         <div class="container-fluid">
           <router-link to="/" class="navbar-brand">Odjeća</router-link>
           <div class="d-flex">
-            <router-link to="/cart" class="nav-link">
-              <i class="bi bi-cart"></i> 
-            </router-link>
+            <span class="navbar-text">
+              Košarica: {{ brproizvoda_kosarica }} proizvoda
+            </span>
           </div>
         </div>
       </nav>
+      <button v-if="brproizvoda_kosarica > 0" @click="naruci">
+        Naruči proizvode
+      </button>
       <div class="proizvodi-container">
         <div v-for="proizvod in proizvodi" :key="proizvod.id" class="proizvod-card">
           <router-link :to="`/proizvodi/${proizvod.id}`">
@@ -29,6 +32,7 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import { getKosaricu, ocisti } from '../kosarica.js';
 
 const proizvodi = ref([]);
 
@@ -40,6 +44,33 @@ onMounted(async () => {
         console.error("Došlo je do greške:", error);
     }
 });
+
+const brproizvoda_kosarica = ref(0);
+
+onMounted(() => {
+  brproizvoda_kosarica.value = getKosaricu().length;
+});
+
+const naruci = async () => {
+  const kosarica = getKosaricu();
+
+  if (kosarica.length === 0) 
+    return;
+
+  try {
+    const response = await axios.post('http://localhost:3000/narudzbe', {
+      narudzba: kosarica,
+    });
+
+    if (response.status === 200) {
+      alert('Narudžba uspješno poslana!');
+      ocisti();
+    }
+  } catch (error) {
+    console.error('Došlo je do greške prilikom slanja narudžbe:', error);
+    alert('Greška prilikom slanja narudžbe');
+  }
+};
 </script>
   
 <style scoped>
