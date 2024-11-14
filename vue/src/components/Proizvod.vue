@@ -1,12 +1,11 @@
 <template>
   <div v-if="proizvod" class="bg-white">
     <div class="pt-6">
-      <!-- Breadcrumb -->
       <nav aria-label="Breadcrumb">
         <ol role="list" class="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
           <li>
             <div class="flex items-center">
-              <a href="#" class="mr-2 text-sm font-medium text-gray-900">Odjeća</a>
+              <router-link to="/" class="mr-2 text-sm font-medium text-gray-900">Odjeća</router-link>
               <svg width="16" height="20" viewBox="0 0 16 20" fill="currentColor" aria-hidden="true" class="h-5 w-4 text-gray-300">
                 <path d="M5.697 4.34L8.98 16.532h1.327L7.025 4.341H5.697z" />
               </svg>
@@ -40,7 +39,7 @@
       <div class="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:max-w-7xl lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
         <div class="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
           <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{{ proizvod.naziv }}</h1>
-          <p class="text-base text-gray-700 mt-4">{{ proizvod.opis }}</p>
+
         </div>
 
         <!-- Options -->

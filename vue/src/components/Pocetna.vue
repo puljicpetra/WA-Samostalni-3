@@ -2,7 +2,7 @@
     <div class="proizvodi-container">
       <div v-for="proizvod in proizvodi" :key="proizvod.id" class="proizvod-card">
         <router-link :to="`/proizvodi/${proizvod.id}`">
-          <img :src="proizvod.slika" :alt="proizvod.naziv" class="proizvod-img" />
+          <img :src="proizvod.slike[0]" :alt="proizvod.naziv" class="proizvod-img" />
           <div class="proizvod-info">
             <h3>{{ proizvod.naziv }}</h3>
             <p>{{ proizvod.cijena }}€</p>
