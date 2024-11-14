@@ -39,7 +39,6 @@
       <div class="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:max-w-7xl lg:grid lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
         <div class="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
           <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{{ proizvod.naziv }}</h1>
-
         </div>
 
         <!-- Options -->
@@ -62,7 +61,17 @@
             <h3 class="text-sm font-medium text-gray-900">Veličina</h3>
             <fieldset class="mt-4">
               <div class="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
-                <label v-for="(velicina, index) in proizvod.velicine" :key="index" class="group relative flex cursor-pointer items-center justify-center rounded-md border bg-white px-4 py-3 text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:outline-none">
+                <label
+                  v-for="(velicina, index) in proizvod.velicine"
+                  :key="index"
+                  class="group relative flex cursor-pointer items-center justify-center rounded-md border bg-white px-4 py-3 text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:outline-none"
+                  :class="{
+                    'bg-gray-200': odabrano === velicina, 
+                    'border-black': odabrano === velicina,
+                    'font-semibold': odabrano === velicina
+                  }"
+                  @click="odabrano = velicina" 
+                >
                   <input type="radio" name="size-choice" :value="velicina" class="sr-only" />
                   <span>{{ velicina }}</span>
                 </label>
@@ -70,7 +79,7 @@
             </fieldset>
           </div>
 
-          <button type="submit" class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+          <button type="submit" class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-black px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2">
             Dodaj u košaricu
           </button>
         </div>
@@ -109,6 +118,8 @@ let proizvod = ref({
   opis: '',
   karakteristika: []
 });
+
+const odabrano = ref(null);
 
 onMounted(async () => {
   const id = route.params.id; 
