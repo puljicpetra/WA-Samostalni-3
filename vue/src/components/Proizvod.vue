@@ -114,6 +114,7 @@ import { dodaj } from '../kosarica.js';
 import { useRouter } from 'vue-router';
 
 const route = useRoute();
+const  router = useRouter();
 
 let proizvod = ref({
   naziv: '',
@@ -149,15 +150,9 @@ const dodaj_handler = () => {
     };
     dodaj(proizvod_kosarica);
     alert("Proizvod je dodan u košaricu!");
+    router.push('/')
   } else {
     alert("Molimo odaberite veličinu.");
   }
-};
-
-const router = useRouter();
-
-const dodaj_proizvod = () => {
-  dodaj(proizvod.value);
-  router.push('/');
 };
 </script>
