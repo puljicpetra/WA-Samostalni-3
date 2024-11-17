@@ -37,7 +37,6 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
 import { getKosaricu, ocisti } from '../kosarica.js';
 
 const proizvodi = ref([]);
