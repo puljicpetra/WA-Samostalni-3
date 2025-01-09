@@ -1,7 +1,6 @@
 import express from 'express';
 import { proizvodi } from '../data.js';
 
-
 const router = express.Router();
 
 router.get('/', (req, res) => {
